@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build SDL Project with g++",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "*.cpp",
+                "-o",
+                "myprogram",
+                "-lSDL2",
+                "-lSDL2_mixer",
+                "-lSDL2_ttf",
+                "-lSDL2_image"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Compiler: g++"
+        }
+    ]
+}
