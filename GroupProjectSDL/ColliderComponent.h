@@ -66,9 +66,9 @@ public:
 	}
 
 	void draw() override {
-		//SDL_SetRenderDrawBlendMode(Game::renderer, SDL_BLENDMODE_BLEND);
-		//SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 100);
-		//SDL_RenderFillRect(Game::renderer, &collider);
+		SDL_SetRenderDrawBlendMode(Game::renderer, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 100);
+		SDL_RenderFillRect(Game::renderer, &collider);
 	}
 
 private:

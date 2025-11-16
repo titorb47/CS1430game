@@ -39,8 +39,8 @@ const int PLAYER_SCALE = 2;
 const int ENEMY_HEIGHT = 144;
 const int ENEMY_WIDTH = 144;
 
-const int PLAYER_COLLIDER_HEIGHT = 70;
-const int PLAYER_COLLIDER_WIDTH = 50;
+const int PLAYER_COLLIDER_HEIGHT = 75;
+const int PLAYER_COLLIDER_WIDTH = 60;
 
 
 const double PLAYER_SPEED = 2.5;
@@ -134,7 +134,7 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 		//x, y, speed, height, width, scale
 		enemy.addComponent<TransformComponent>(300, 300, 0, ENEMY_HEIGHT, ENEMY_WIDTH, 2);
 		enemy.addComponent<SpriteComponent>(ENEMY_PATH);
-		enemy.addComponent<ColliderComponent>("enemy", 70, 60, -10, 0);
+		enemy.addComponent<ColliderComponent>("enemy", 70, 60, 50, 20);
 		
 		//Add enemy to ENEMY_GROUP
 		enemy.addGroup(ENEMIES_GROUP);
