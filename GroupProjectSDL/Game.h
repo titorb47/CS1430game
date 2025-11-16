@@ -7,7 +7,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <vector>
 using namespace std;
+
+class ColliderComponent;
 
 //This is the class for the entire game
 
@@ -37,20 +40,24 @@ public:
 
 	bool running() { return isRunning; };
 
+	static void AddTile(int id, int x, int y);
+
+	static int tileCount;
+
 	static SDL_Renderer *renderer;
 
-	static const int WINDOW_WIDTH = 800;
-	static const int WINDOW_HEIGHT = 640;
+	static const int WINDOW_WIDTH = 1024;
+	static const int WINDOW_HEIGHT = 1024;
 
 	//Only one event is necessary
 	static SDL_Event event;
 
+	static vector<ColliderComponent*> colliders;
 
 
 private:
 	bool isRunning;
 	SDL_Window* window;
-	int count;
 };
 
 #endif

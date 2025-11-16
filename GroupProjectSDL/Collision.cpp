@@ -16,3 +16,15 @@ bool Collision::AABB(const SDL_Rect& rec1, const SDL_Rect& rec2) {
 	return false;
 
 }
+
+bool Collision::AABB(const ColliderComponent& colliderA,
+	const ColliderComponent& colliderB) {
+
+	if (AABB(colliderA.collider, colliderB.collider)) {
+		return true;
+	}
+
+	else {
+		return false;
+	}
+}

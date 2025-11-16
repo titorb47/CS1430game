@@ -13,9 +13,14 @@ using namespace std;
 //Declared Classes
 class Component;
 class Entity;
+class Manager;
 
-//ComponentID is an alias for size_t
+//ComponentID and GroupID is an alias for size_t
 using ComponentID = size_t;
+
+
+//Group is used for grouping objects for collisions and rendering
+using Group = size_t;
 
 
 /* The following two functions (bottom overloads the top) gets
@@ -24,8 +29,8 @@ using ComponentID = size_t;
 
 /* inline tells the compiler the function should be expanded
    at each place it is called  */
-inline ComponentID getComponentTypeID() {
-	static ComponentID lastID = 0;
+inline ComponentID getNewComponentTypeID() {
+	static ComponentID lastID = 0u;
 	return lastID++;
 }
 
@@ -33,7 +38,7 @@ inline ComponentID getComponentTypeID() {
 //noexcept tells the compiler no exceptions will be thrown
 template <typename T> inline ComponentID getComponentTypeID() noexcept {
 	
-	static ComponentID typeID = getComponentTypeID();
+	static ComponentID typeID = getNewComponentTypeID();
 	
 	return typeID;
 }
@@ -42,7 +47,7 @@ template <typename T> inline ComponentID getComponentTypeID() noexcept {
 //constexpr are compile-time constants, meaning their value
 //is evaluated upon compilation
 constexpr size_t maxComponents = 32;
-
+constexpr size_t maxGroups = 32;
 
 
 /*
@@ -51,6 +56,8 @@ constexpr size_t maxComponents = 32;
 * each represent a component of the entity
 */
 using ComponentBitSet = bitset<maxComponents>;
+using GroupBitSet = bitset<maxGroups>;
+
 using ComponentArray = array<Component*, maxComponents>;
 
 class Component {
@@ -93,6 +100,7 @@ class Component {
 * its components—no need for manual delete calls.   */
 class Entity {
 	private:
+		Manager& manager;
 		bool active = true;
 
 		//This is a vector of unique pointers to each component
@@ -100,8 +108,15 @@ class Entity {
 
 		ComponentArray componentArray;
 		ComponentBitSet componentBitSet;
+		GroupBitSet groupBitSet;
 
 	public:
+		
+		//This is the only way to set a reference member
+		//Using a regular constructor would try to copy the reference member
+		Entity(Manager& myManager) : manager(myManager){};
+
+
 		void update() {
 			// Enhanced for loops that update and draw
 			// components with their varying types
@@ -125,12 +140,24 @@ class Entity {
 			active = false;
 		}
 
+		bool hasGroup(Group mGroup) {
+			return groupBitSet[mGroup];
+		}
+
+		void addGroup(Group mGroup);
+
+		void delGroup(Group mGroup) {
+			groupBitSet[mGroup] = false;
+		}
+
 		template <typename T> bool hasComponent() const{
 
 			//This determines whether the component is in the bitset
 			return componentBitSet[getComponentTypeID<T>()];
 		}
 
+		//TArgs is used to represent type arguments, and they are needed in
+		//both the angle brackets and the parentheses
 		template <typename T, typename... TArgs>
 		T& addComponent(TArgs&&... mArgs) {
 
@@ -177,54 +204,81 @@ class Manager {
 	
 		//Each entity is a pointer, so a vector of unique pointers is necessary
 		vector<unique_ptr<Entity>> entities;
+		
+		/*An array of vectors of entity pointers, where each vector
+		is stores entities of a particular group*/
+		array<vector<Entity*>, maxGroups> groupedEntities;
 
-		public:
-			void update() {
-				//Call the update method for each entity
-				/* Each entity is a pointer, so the auto keyword is necessary
-				* to determine the type */
-				for (auto& e : entities) e->update();
+	public:
+		void update() {
+			//Call the update method for each entity
+			/* Each entity is a pointer, so the auto keyword is necessary
+			* to determine the type */
+			for (auto& e : entities) e->update();
+		}
+
+		void draw() {
+			for (auto& e : entities) e->draw();
+		}
+
+		void refresh() {
+
+			//Erase (range start, range end)
+			//(range start) = remove_if(begin(entities, end(entities), condition)
+				
+			/* remove_if checks all elements from beginning to end that 
+			* return the lambda function, which is our condition */
+				
+			/*The elements that meet the condition are moved to the end of the vector
+			* therefore (range start) is defined */
+
+			//The range is therefore from the first element to be remove to 
+			// the end of the vector (range start, range end)
+				
+
+			for (unsigned int i = 0; i < maxGroups; ++i) {
+					
+				//Erase all entities in this group
+				//v is the group
+				auto& v (groupedEntities[i]);
+					
+				v.erase(remove_if(begin(v), end(v), [i](Entity* entity) {
+						
+					return !entity->isActive() || !entity->hasGroup(i);
+					}
+				), end(v));
 			}
 
-			void draw() {
-				for (auto& e : entities) e->draw();
-			}
+			entities.erase(remove_if (begin(entities), end(entities),
+				[](const unique_ptr<Entity>& mEntity) {
+					return !mEntity->isActive();
+				}),
+				end(entities));
 
-			void refresh() {
+		}
 
-				//Erase (range start, range end)
-				//(range start) = remove_if(begin(entities, end(entities), condition)
+		void AddToGroup(Entity* mEntity, Group mGroup) {
+			groupedEntities[mGroup].emplace_back(mEntity);
+		}
+
+		vector<Entity*>& GetGroup(Group mGroup) {
+			return groupedEntities[mGroup];
+		}
+
+		Entity& addEntity() {
 				
-				/* remove_if checks all elements from beginning to end that 
-				* return the lambda function, which is our condition */
-				
-				/*The elements that meet the condition are moved to the end of the vector
-				* therefore (range start) is defined */
+			//New entity pointer
+			Entity* e = new Entity(*this);
+			unique_ptr<Entity> uPtr {e};
 
-				//The range is therefore from the first element to be remove to 
-				// the end of the vector (range start, range end)
-				
-				entities.erase(remove_if (begin(entities), end(entities),
-					[](const unique_ptr<Entity>& mEntity) {
-						return !mEntity->isActive();
-					}),
-					end(entities));
-			}
+			//Emplace back puts the arguments for the entity's
+			//constructor inside the vector. We use the move function
+			//because we cannot copy the unique pointer
+			entities.emplace_back(move(uPtr));
 
-			Entity& addEntity() {
-				
-				//New entity pointer
-				Entity* e = new Entity();
-				unique_ptr<Entity> uPtr {e};
-
-				//Emplace back puts the arguments for the entity's
-				//constructor inside the vector. We use the move function
-				//because we cannot copy the unique pointer
-				entities.emplace_back(move(uPtr));
-
-				//Return entity pointer
-				return *e;
-			}
+			//Return entity pointer
+			return *e;
+		}
 };
 
 #endif

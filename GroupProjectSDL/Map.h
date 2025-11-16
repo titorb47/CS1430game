@@ -1,12 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "Game.h"
-
-struct Template {
-	int srcRectH;
-	int srcRectW;
-};
+#include <string>
+using namespace std;
 
 class Map {
 	public:
@@ -16,27 +12,14 @@ class Map {
 		//Deconstructor
 		~Map();
 
-		static const int tileSize = 32;
-		static const int xMap = Game::WINDOW_HEIGHT / tileSize;
-		static const int yMap = Game::WINDOW_WIDTH / tileSize;
+		//This needs to be static because Game::AddTile is also static
 
-		void LoadMap(int[xMap][yMap]);
-		void DrawMap();
+		static void LoadMap(string path, int sizeX, int sizeY);
 
 
 	private:
 
-		SDL_Rect srcRect;
-		SDL_Rect destRect;
 
-
-		SDL_Texture* lightWater;
-		SDL_Texture* mediumWater;
-		SDL_Texture* darkWater;
-		SDL_Texture* bubbles;
-
-		//Dimensions for Map?
-		int map[xMap][yMap];
 };
 
 #endif

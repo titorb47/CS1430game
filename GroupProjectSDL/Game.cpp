@@ -5,11 +5,37 @@
 #include "Vector2D.h"
 #include "Collision.h"
 
-const char* PLAYER_PATH = "Assets/Fish.png";
+const char* PLAYER_PATH = "Assets/FishSheet.png";
 const char* ENEMY_PATH = "Assets/Shark.png";
 
-const int PLAYER_HEIGHT = 144;
-const int PLAYER_WIDTH = 144;
+
+//1 Game.h declares addTile function
+//2 Game.cpp defines addTile function
+//3 addTile adds Tile component
+
+//4 LoadMap is called in Game.cpp
+//5 LoadMap calls addTile function
+//6 addTile function calls addComponent function for
+//	a tile component
+
+const string MAP_PATH = "Assets/Tilemap.txt";
+//To change MAP_ROWS or MAP_COLS, the file itself needs to be changed
+//	to render any new tiles
+const int MAP_ROWS = 32;
+const int MAP_COLS = 32;
+const int TILE_HEIGHT = 32;
+const int TILE_WIDTH = 32;
+
+int Game::tileCount = 0;
+
+//DO NOT CHANGE HEIGHT AND WIDTH
+const int PLAYER_HEIGHT = 101;
+const int PLAYER_WIDTH = 100;
+
+
+//You can change scale
+const int PLAYER_SCALE = 2;
+
 const int ENEMY_HEIGHT = 144;
 const int ENEMY_WIDTH = 144;
 
@@ -28,7 +54,17 @@ Manager manager;
 //addEntity() also puts this entity in unique_ptr<Entity>
 //so auto keyword is necessary to reference it again
 auto& player(manager.addEntity());
-auto& wall(manager.addEntity());
+auto& enemy(manager.addEntity());
+
+//See ECS.cpp to understand how the group bitset works
+
+//The type of this enum is set to size_t
+enum groupLabels : size_t {
+	MAP_GROUP,
+	PLAYERS_GROUP,
+	ENEMIES_GROUP,
+	COLLIDERS_GROUP
+};
 
 /*
 * The renderer is set to a null pointer before
@@ -37,12 +73,12 @@ auto& wall(manager.addEntity());
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
+vector<ColliderComponent*> Game::colliders;
 
 //Constructor
 Game::Game(){
 	isRunning = false;
 	window = NULL;
-	count = 0;
 }
 
 //Deconstructor;
@@ -82,17 +118,26 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 		//map.h and map.cpp
 		map = new Map();
 
+		//See Map.cpp
+		//Last two numbers are sizes for array
+		Map::LoadMap(MAP_PATH, MAP_ROWS, MAP_COLS);
+
 		//See ecs.h and the header files for each component
-		player.addComponent<TransformComponent>(0, 0, PLAYER_SPEED, PLAYER_HEIGHT, PLAYER_WIDTH, 1);
-		player.addComponent<SpriteComponent>(PLAYER_PATH, PLAYER_HEIGHT, PLAYER_WIDTH);
+		player.addComponent<TransformComponent>(0, 0, PLAYER_SPEED, PLAYER_HEIGHT, PLAYER_WIDTH, 2);
+		player.addComponent<SpriteComponent>(PLAYER_PATH, 4, 50);
 		player.addComponent<KeyboardController>();
 		player.addComponent<ColliderComponent>("player", PLAYER_COLLIDER_HEIGHT, PLAYER_COLLIDER_WIDTH);
 
-		//x, y, speed, height, width, scale
-		wall.addComponent<TransformComponent>(300, 300, 0, ENEMY_HEIGHT, ENEMY_WIDTH, 1);
-		wall.addComponent<SpriteComponent>(ENEMY_PATH, ENEMY_HEIGHT, ENEMY_WIDTH);
-		wall.addComponent<ColliderComponent>("enemy", 70, 60, -10, 0);
+		//Add player to PLAYER_GROUP
+		player.addGroup(PLAYERS_GROUP);
 
+		//x, y, speed, height, width, scale
+		enemy.addComponent<TransformComponent>(300, 300, 0, ENEMY_HEIGHT, ENEMY_WIDTH, 2);
+		enemy.addComponent<SpriteComponent>(ENEMY_PATH);
+		enemy.addComponent<ColliderComponent>("enemy", 70, 60, -10, 0);
+		
+		//Add enemy to ENEMY_GROUP
+		enemy.addGroup(ENEMIES_GROUP);
 	}
 
 	//Initialization was not successful
@@ -139,43 +184,45 @@ void Game::update() {
 
 	int playerBottom = player.getComponent<ColliderComponent>().bottomEdge;
 
-	if (Collision::AABB(player.getComponent<ColliderComponent>().collider,
-		wall.getComponent<ColliderComponent>().collider))
-	{
-		int wallLeft = wall.getComponent<ColliderComponent>().leftEdge;
-		int wallRight = wall.getComponent<ColliderComponent>().rightEdge;
-		int wallTop= wall.getComponent<ColliderComponent>().topEdge;
-		int wallBottom = wall.getComponent<ColliderComponent>().bottomEdge;
+	for (auto cc : colliders) {
+		if (Collision::AABB(player.getComponent<ColliderComponent>(),
+			*cc) && cc->tag == "enemy")
+		{
+			int ccLeft = cc->leftEdge;
+			int ccRight = cc->rightEdge;
+			int ccTop = cc->topEdge;
+			int ccBottom = cc->bottomEdge;
 
 
-		int overlapRight = playerRight - wallLeft;   // overlap if player is to the left of wall
-		int overlapLeft = wallRight - playerLeft;   // overlap if player is to the right of wall
-		int overlapTop = wallBottom - playerTop;   // overlap if player is below wall
-		int overlapBottom = playerBottom - wallTop;   // overlap if player is above wall
+			int overlapRight = playerRight - ccLeft;   // overlap if player is to the left of wall
+			int overlapLeft = ccRight - playerLeft;   // overlap if player is to the right of wall
+			int overlapTop = ccBottom - playerTop;   // overlap if player is below wall
+			int overlapBottom = playerBottom - ccTop;   // overlap if player is above wall
 
-		// Only resolve if there is an actual collision
-		if (overlapRight > 0 && overlapLeft > 0 && overlapTop > 0 && overlapBottom > 0) {
-			
-			// Find the smallest overlap axis
-			int minOverlap = std::min({ overlapRight, overlapLeft, overlapTop, overlapBottom });
+			// Only resolve if there is an actual collision
+			if (overlapRight > 0 && overlapLeft > 0 && overlapTop > 0 && overlapBottom > 0) {
 
-			//This resolve vector determines how much the player should move
-			Vector2D resolve(0, 0);
+				// Find the smallest overlap axis
+				int minOverlap = std::min({ overlapRight, overlapLeft, overlapTop, overlapBottom });
 
-			if (minOverlap == overlapRight)
-				resolve = Vector2D(-overlapRight, 0);
-			else if (minOverlap == overlapLeft)
-				resolve = Vector2D(overlapLeft, 0);
-			else if (minOverlap == overlapTop)
-				resolve = Vector2D(0, -overlapTop);
-			else if (minOverlap == overlapBottom)
-				resolve = Vector2D(0, overlapBottom);
+				//This resolve vector determines how much the player should move
+				Vector2D resolve(0, 0);
 
-			currPosition += resolve;
-			player.getComponent<TransformComponent>().velocity = Vector2D(0, 0); 
-			cout << "YOUCH!" << endl;
+				if (minOverlap == overlapRight)
+					resolve = Vector2D(-overlapRight, 0);
+				else if (minOverlap == overlapLeft)
+					resolve = Vector2D(overlapLeft, 0);
+				else if (minOverlap == overlapTop)
+					resolve = Vector2D(0, -overlapTop);
+				else if (minOverlap == overlapBottom)
+					resolve = Vector2D(0, overlapBottom);
+
+				currPosition += resolve;
+				player.getComponent<TransformComponent>().velocity = Vector2D(0, 0);
+			}
 		}
 	}
+	
 
 	
 	if (playerLeft < 0) {
@@ -200,19 +247,29 @@ void Game::update() {
 	player.getComponent<TransformComponent>().position = currPosition;
 }
 
+//Here we add our groups
+
+/* tiles, players, and enemies are references
+   to the vector of entity pointers */
+auto& tiles(manager.GetGroup(MAP_GROUP));
+auto& players(manager.GetGroup(PLAYERS_GROUP));
+auto& enemies(manager.GetGroup(ENEMIES_GROUP));
+
 void Game::render() {
 	//Clear our game's renderer data member
 	SDL_RenderClear(renderer);
-	
-	//Add stuff to render
 
+	for (auto& t : tiles) {
+		t->draw();
+	}
 
-	//See Map.cpp
-	map->DrawMap();
+	for (auto& p : players) {
+		p->draw();
+	}
 
-	//See ecs.h (manager and entity class)
-	manager.draw();
-
+	for (auto& e : enemies) {
+		e->draw();
+	}
 
 	SDL_RenderPresent(renderer);
 }
@@ -225,4 +282,13 @@ void Game::clean() {
 	cout << "Game was cleaned!" << endl;
 }
 
+void Game::AddTile(int id, int x, int y) {
+	//Adds the tile entity
+	auto& tile(manager.addEntity());
+
+	
+	//Adds the tile component to the tile entity
+	tile.addComponent<TileComponent>(x, y, TILE_WIDTH, TILE_HEIGHT, id);
+	tile.addGroup(MAP_GROUP);
+}
 
