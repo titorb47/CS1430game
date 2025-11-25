@@ -33,11 +33,11 @@
 // #include <SDL2/SDL_mixer.h>
 
 #include <string.h>
+
 #include <iostream>
-#include <string>
-#include <string.h>
 #include <map>
 #include <queue>
+#include <string>
 using namespace std;
 
 const char UP_ARROW = 1;
@@ -52,32 +52,26 @@ const int WHITE = 255;
 const int MAX_THREAD = 100;
 
 // Point
-struct point
-{
+struct point {
     int x, y;
-    point()
-    {
+    point() {
         x = y = 0;
     }
 
-    point(int x, int y)
-    {
+    point(int x, int y) {
         this->x = x;
         this->y = y;
     }
 };
 
 // Color
-struct color
-{
+struct color {
     unsigned int R, G, B;
-    color()
-    {
+    color() {
         R = G = B = 0;
     }
 
-    color(int r, int g, int b)
-    {
+    color(int r, int g, int b) {
         R = r;
         G = g;
         B = b;
@@ -85,18 +79,16 @@ struct color
 };
 
 // Threaded Sound Function
-struct param
-{
+struct param {
     bool play;
     bool running;
     bool pause;
-    SDL_Thread *threadID;
-    SDL_cond *cond;
-    SDL_mutex *mut;
+    SDL_Thread* threadID;
+    SDL_cond* cond;
+    SDL_mutex* mut;
     string name;
 
-    param()
-    {
+    param() {
         play = false;
         running = false;
         pause = false;
@@ -107,14 +99,13 @@ struct param
     }
 };
 
-class SDL_Plotter
-{
-private:
-    SDL_Texture *texture;
-    SDL_Renderer *renderer;
-    SDL_Window *window;
-    Uint32 *pixels;
-    const Uint8 *currentKeyStates;
+class SDL_Plotter {
+   private:
+    SDL_Texture* texture;
+    SDL_Renderer* renderer;
+    SDL_Window* window;
+    Uint32* pixels;
+    const Uint8* currentKeyStates;
     SDL_Event event;
     int row, col;
     bool quit;
@@ -130,9 +121,9 @@ private:
     int soundCount;
     map<string, param> soundMap;
 
-    char getKeyPress(SDL_Event &event);
+    char getKeyPress(SDL_Event& event);
 
-public:
+   public:
     SDL_Plotter(int r = 480, int c = 640, bool WITH_SOUND = true);
     ~SDL_Plotter();
     void update();
@@ -160,12 +151,12 @@ public:
 
     void Sleep(int ms);
 
-    bool getMouseDown(int &x, int &y);
-    bool getMouseUp(int &x, int &y);
-    bool getMouseMotion(int &x, int &y);
-    void getMouseLocation(int &x, int &y);
+    bool getMouseDown(int& x, int& y);
+    bool getMouseUp(int& x, int& y);
+    bool getMouseMotion(int& x, int& y);
+    void getMouseLocation(int& x, int& y);
 
     Uint32 getColor(int x, int y);
 };
 
-#endif // SDL_PLOTTER_H_
+#endif  // SDL_PLOTTER_H_
