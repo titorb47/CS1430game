@@ -1,8 +1,16 @@
-﻿  Game.cpp
-C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(81,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+﻿  Collision.cpp
+C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(79,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'Collision.cpp')
+  
+C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(85,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'Collision.cpp')
+  
+  Game.cpp
+C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(79,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(87,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(85,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
+  Generating Code...
   GroupProjectSDL.vcxproj -> C:\Users\Owner\Documents\C++ Projects\GroupProjectSDL\x64\Debug\GroupProjectSDL.exe

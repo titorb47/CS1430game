@@ -206,7 +206,7 @@ class Manager {
 		vector<unique_ptr<Entity>> entities;
 		
 		/*An array of vectors of entity pointers, where each vector
-		is stores entities of a particular group*/
+		stores entities of a particular group*/
 		array<vector<Entity*>, maxGroups> groupedEntities;
 
 	public:

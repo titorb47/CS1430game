@@ -25,42 +25,48 @@ const int MAP_COLS = 32;
 const int TILE_HEIGHT = 32;
 const int TILE_WIDTH = 32;
 
-const char* PLAYER_PATH = "Assets/FishSheet.png";
+const char* PLAYER_PATH = "Assets/Fish Sheet with Dash.png";
 const char* ENEMY_PATH = "Assets/Shark.png";
 
 //DO NOT CHANGE HEIGHT AND WIDTH
 const int PLAYER_HEIGHT = 101;
 const int PLAYER_WIDTH = 100;
 
-//You can change scale
+//You can change scale and speed
 const int PLAYER_SCALE = 2;
+const int PLAYER_SPEED = 3;
 
-const int SHARK_SPAWNRATE_MS = 5000;
-
+const int ENEMY_SCALE = 2;
+const int ENEMY_SPAWNRATE_MS = 2000;
 const int ENEMY_HEIGHT = 144;
 const int ENEMY_WIDTH = 144;
+const int ENEMY_SPEED = 15;
+const int ENEMY_SPAWNX_RANGE = 900;
+const int ENEMY_SPAWNY_RANGE = 1;
+
+Vector2D enemyVector(0, 1);
 
 const int PLAYER_COLLIDER_HEIGHT = 75;
 const int PLAYER_COLLIDER_WIDTH = 60;
-
-const double PLAYER_SPEED = 2.5;
 
 const string PLAYER_TAG = "player";
 const string ENEMY_TAG = "enemy";
 
 
 int Game::tileCount = 0;
-bool Game::isAlive = true;
+bool Game::playerIsAlive = true;
+
+Uint32 currentTime;
+int lastSpawn = 0;
 
 //Each new game object must be intialized, updated, and rendered
-Map* map;
+Map* gameMap;
 Manager manager;
 
 //We add a new entity called player
 //addEntity() also puts this entity in unique_ptr<Entity>
 //so auto keyword is necessary to reference it again
 auto& player(manager.addEntity());
-auto& enemy(manager.addEntity());
 
 //See ECS.cpp to understand how the group bitset works
 
@@ -122,7 +128,7 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 
 
 		//map.h and map.cpp
-		map = new Map();
+		gameMap = new Map();
 
 		//See Map.cpp
 		//Last two numbers are sizes for array
@@ -132,26 +138,15 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 		//ALWAYS DEFINE TRANSFORM FIRST, AND COLLIDER BEFORE SPRITE
 		player.addComponent<TransformComponent>(500, 850, PLAYER_SPEED, PLAYER_HEIGHT, PLAYER_WIDTH, 2);
 		player.getComponent<TransformComponent>().setTag(PLAYER_TAG);
-		player.addComponent<SpriteComponent>(PLAYER_PATH, 0, 4, 50);
+		player.addComponent<SpriteComponent>(PLAYER_PATH, 0, true);
 		player.addComponent<ColliderComponent>(PLAYER_TAG, PLAYER_COLLIDER_HEIGHT, PLAYER_COLLIDER_WIDTH);
 		player.addComponent<KeyboardController>();
+
 
 		//Add player to PLAYER_GROUP
 		player.addGroup(PLAYERS_GROUP);
 
 
-
-		//x, y, speed, height, width, scale
-
-		while (isAlive) {
-			SDL_Delay(SHARK_SPAWNRATE_MS);
-			enemy.addComponent<TransformComponent>(rand() % 400, 300, 0, ENEMY_HEIGHT, ENEMY_WIDTH, 2);
-			enemy.addComponent<SpriteComponent>(ENEMY_PATH, 180);
-			enemy.addComponent<ColliderComponent>(ENEMY_TAG, 100, 100, 80, 60);
-
-			//Add enemy to ENEMY_GROUP
-			enemy.addGroup(ENEMIES_GROUP);
-		}
 	}
 
 
@@ -226,7 +221,7 @@ void Game::update() {
 
 			//If the player hits an enemy, stop animations
 			if (cc->tag == "enemy") {
-				isAlive = false;
+				playerIsAlive = false;
 			}
 		}
 	}
@@ -252,6 +247,35 @@ void Game::update() {
 	}
 
 	player.getComponent<TransformComponent>().position = currPosition;
+
+
+
+
+	//This is what spawns our enemies
+	currentTime = SDL_GetTicks();
+
+	if ( (currentTime - lastSpawn >= ENEMY_SPAWNRATE_MS) && 
+	playerIsAlive) {
+
+		auto& enemy(manager.addEntity());
+
+		//x, y, speed, height, width, scale
+		enemy.addComponent<TransformComponent>(rand() % ENEMY_SPAWNX_RANGE, 
+		rand() % ENEMY_SPAWNY_RANGE, ENEMY_SPEED, ENEMY_HEIGHT, 
+		ENEMY_WIDTH, ENEMY_SCALE);
+
+		TransformComponent& transform = enemy.getComponent<TransformComponent>();
+
+		enemy.addComponent<SpriteComponent>(ENEMY_PATH, 180);
+		enemy.addComponent<ColliderComponent>(ENEMY_TAG, 100, 100, 80, 60);
+
+		//Add enemy to ENEMY_GROUP
+		enemy.addGroup(ENEMIES_GROUP);
+
+		transform.velocity += enemyVector;
+
+		lastSpawn = currentTime;
+	}
 }
 
 //Here we add our groups
@@ -275,7 +299,14 @@ void Game::render() {
 	}
 
 	for (auto& e : enemies) {
-		e->draw();
+		if (e->getComponent<TransformComponent>().position.y < 1100) {
+			e->draw();
+		}
+		else {
+			e->destroy();
+
+		}
+		
 	}
 
 	SDL_RenderPresent(renderer);

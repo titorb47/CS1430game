@@ -43,12 +43,15 @@ public:
 	static void AddTile(int id, int x, int y);
 
 	static int tileCount;
-	static bool isAlive;
+	static bool playerIsAlive;
 
 	static SDL_Renderer *renderer;
 
 	static const int WINDOW_WIDTH = 1024;
 	static const int WINDOW_HEIGHT = 1024;
+	static const int DASH_DELAY = 3000;
+	static const int DASH_DURATION = 1000;
+
 
 	//Only one event is necessary
 	static SDL_Event event;
