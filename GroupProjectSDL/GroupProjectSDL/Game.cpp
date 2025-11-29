@@ -16,7 +16,16 @@
 //5 LoadMap calls addTile function
 //6 addTile function calls addComponent function for
 //	a tile component
-const string MAP_PATH = "Assets/Tilemap.txt";
+const char* MAP_PATH = "Assets/Ocean Map v0.png";
+
+SDL_Texture *mapTexture;
+const int MAP_DEST_RECT_X = 1024;
+const int MAP_DEST_RECT_Y = 1024;
+const int MAP_SIZE_Y = 512;
+const int MAP_SCROLL_SPEED = 10;
+
+SDL_Rect mapDestRect = {0, 0, MAP_DEST_RECT_X, MAP_DEST_RECT_Y};
+SDL_Rect mapSrcRect = {0, 492, 512, 20};
 
 //To change MAP_ROWS or MAP_COLS, the file itself needs to be changed
 //	to render any new tiles
@@ -60,10 +69,10 @@ Uint32 currentTime;
 int lastSpawn = 0;
 
 //Each new game object must be intialized, updated, and rendered
-Map* gameMap;
+//Map* gameMap;
 Manager manager;
 
-//We add a new entity called player
+//We add a new entity called player and map
 //addEntity() also puts this entity in unique_ptr<Entity>
 //so auto keyword is necessary to reference it again
 auto& player(manager.addEntity());
@@ -97,7 +106,6 @@ Game::Game(){
 Game::~Game() {}
 
 void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
-	
 	//default value of SDL_WINDOW
 	int flags = 0;
 	
@@ -128,15 +136,18 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 
 
 		//map.h and map.cpp
-		gameMap = new Map();
+		//gameMap = new Map();
 
 		//See Map.cpp
 		//Last two numbers are sizes for array
-		Map::LoadMap(MAP_PATH, MAP_ROWS, MAP_COLS);
+		//Map::LoadMap(MAP_PATH, MAP_ROWS, MAP_COLS);
+
+		mapTexture = TextureManager::LoadTexture(MAP_PATH);
 
 		//See ecs.h and the header files for each component
 		//ALWAYS DEFINE TRANSFORM FIRST, AND COLLIDER BEFORE SPRITE
-		player.addComponent<TransformComponent>(500, 850, PLAYER_SPEED, PLAYER_HEIGHT, PLAYER_WIDTH, 2);
+		player.addComponent<TransformComponent>(500, 850, PLAYER_SPEED, PLAYER_HEIGHT, 
+		PLAYER_WIDTH, PLAYER_SCALE);
 		player.getComponent<TransformComponent>().setTag(PLAYER_TAG);
 		player.addComponent<SpriteComponent>(PLAYER_PATH, 0, true);
 		player.addComponent<ColliderComponent>(PLAYER_TAG, PLAYER_COLLIDER_HEIGHT, PLAYER_COLLIDER_WIDTH);
@@ -145,6 +156,7 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 
 		//Add player to PLAYER_GROUP
 		player.addGroup(PLAYERS_GROUP);
+
 
 
 	}
@@ -276,6 +288,11 @@ void Game::update() {
 
 		lastSpawn = currentTime;
 	}
+
+	if (playerIsAlive) {
+		mapSrcRect.y = MAP_SIZE_Y - 20 - 
+		( (currentTime / MAP_SCROLL_SPEED) % (MAP_SIZE_Y));
+	}
 }
 
 //Here we add our groups
@@ -287,12 +304,18 @@ auto& players(manager.GetGroup(PLAYERS_GROUP));
 auto& enemies(manager.GetGroup(ENEMIES_GROUP));
 
 void Game::render() {
+
+
 	//Clear our game's renderer data member
 	SDL_RenderClear(renderer);
 
+	SDL_RenderCopy(renderer, mapTexture, &mapSrcRect, &mapDestRect);
+
+	/*
 	for (auto& t : tiles) {
 		t->draw();
 	}
+	*/
 
 	for (auto& p : players) {
 		p->draw();
@@ -320,6 +343,7 @@ void Game::clean() {
 	cout << "Game was cleaned!" << endl;
 }
 
+
 void Game::AddTile(int id, int x, int y) {
 	//Adds the tile entity
 	auto& tile(manager.addEntity());
@@ -329,4 +353,5 @@ void Game::AddTile(int id, int x, int y) {
 	tile.addComponent<TileComponent>(x, y, TILE_WIDTH, TILE_HEIGHT, id);
 	tile.addGroup(MAP_GROUP);
 }
+
 
