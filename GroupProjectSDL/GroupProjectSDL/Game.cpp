@@ -16,7 +16,7 @@
 //5 LoadMap calls addTile function
 //6 addTile function calls addComponent function for
 //	a tile component
-const char* MAP_PATH = "Assets/Ocean Map v0.png";
+const char* MAP_PATH = "Assets/Ocean Map v1.png";
 
 SDL_Texture *mapTexture;
 const int MAP_DEST_RECT_X = 1024;
@@ -297,9 +297,8 @@ void Game::update() {
 
 //Here we add our groups
 
-/* tiles, players, and enemies are references
+/* players and enemies are references
    to the vector of entity pointers */
-auto& tiles(manager.GetGroup(MAP_GROUP));
 auto& players(manager.GetGroup(PLAYERS_GROUP));
 auto& enemies(manager.GetGroup(ENEMIES_GROUP));
 
