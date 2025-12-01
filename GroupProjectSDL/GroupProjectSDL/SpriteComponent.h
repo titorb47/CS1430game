@@ -3,6 +3,7 @@
 
 #include "Components.h"
 #include "Game.h"
+#include "GameConstants.h"
 #include "SDL.h"
 #include "TextureManager.h"
 #include "Animation.h"
@@ -19,34 +20,23 @@ class SpriteComponent : public Component {
 		SDL_Texture *texture;
 		SDL_Rect srcRect;
 		SDL_Rect destRect;
-		Animation swimAnimation;
-		Animation dashAnimation;
-		Animation deathAnimation;
 
 		bool animated = false;
+		bool dying = false;
+		map<string, Animation> animations;
 		bool rotated = false;
 		double angle = 0;
-		int nFrames;
-		int oneThousandOverFPS;
-		
-		const int SWIM_FRAMES = 4;
-		const int DASH_FRAMES = 3;
-		const int DEATH_FRAMES = 5;
-
-		const int SWIM_ANIM_SPEED= 100;
-		const int DASH_ANIM_SPEED = 50;
-		const int DEATH_ANIM_SPEED = 200;
-		
-	public:
+		int nFrames = 1;
+		int oneThousandOverFPS = 1;
 		
 		int animIndex = 0;
-		const string SWIM_ANIMATION_NAME = "Swim";
-		const string DASH_ANIMATION_NAME = "Dash";
-		const string DEATH_ANIMATION_NAME = "Death";
 
-
-		//maps are like dictionaries
-		map<string, Animation> animations;
+		vector<const char*> textures;
+		int timer;
+		int deathStart;
+		
+		
+	public:
 
 		SpriteComponent() = default;
 		
@@ -61,19 +51,17 @@ class SpriteComponent : public Component {
 			
 		}
 
-		SpriteComponent(const char* path, double angle, bool isAnimated) {
-			animated = isAnimated;
+
+		//maps are like dictionaries
+		SpriteComponent(vector<const char*> textures, double angle, 
+		map<string, Animation> animations) {
+			animated = true;
 			rotated = true;
-			swimAnimation = Animation(0, SWIM_FRAMES, SWIM_ANIM_SPEED);
-			dashAnimation = Animation(1, DASH_FRAMES, DASH_ANIM_SPEED);
-			deathAnimation = Animation(2, DEATH_FRAMES, DEATH_ANIM_SPEED);
+			this->animations = animations;
+			this->textures = textures;
+			this->angle = angle;
+			setTexture(textures.at(0));
 
-			animations.emplace(SWIM_ANIMATION_NAME, swimAnimation);
-			animations.emplace(DASH_ANIMATION_NAME, dashAnimation);
-			animations.emplace(DEATH_ANIMATION_NAME, deathAnimation);
-
-			Play(SWIM_ANIMATION_NAME);
-			setTexture(path);
 		}
 
 
@@ -104,14 +92,31 @@ class SpriteComponent : public Component {
 
 		void update() override {
 
-			
+			timer = Game::currentTime;
 
-			if (animated && ( (Game::playerIsAlive) || (transform->tag != "player"))) {
+			if (animated && Game::playerIsAlive) {
 				srcRect.x = srcRect.w * 
-				static_cast<int>((SDL_GetTicks() / oneThousandOverFPS) % nFrames);
+				static_cast<int>((timer/ oneThousandOverFPS) % nFrames);
 			}
 
-			srcRect.y = animIndex * transform->height;
+			//Reset SrcRect and then play animation only once
+			//This assumes the death animation is being played
+			else if (transform->tag == PLAYER_TAG && !Game::playerIsAlive) {
+				if (!dying) {
+					dying = true;
+					deathStart = timer;
+					srcRect.x = 0;				
+				}
+
+				if (timer - deathStart < PLAYER_DEATH_ANIM_DURATION) {
+					srcRect.x = srcRect.w *
+						static_cast<int>(((timer - deathStart) / oneThousandOverFPS) % nFrames);
+					cout << oneThousandOverFPS << endl;
+				}
+				
+				
+			}
+
 
 
 			destRect.x = static_cast<int>(transform->position.x);
@@ -123,18 +128,28 @@ class SpriteComponent : public Component {
 		}
 
 		void draw() override {
-			if (!rotated) {
-				TextureManager::Draw(texture, srcRect, destRect);
-			}
-			else {
-				TextureManager::DrawAngle(texture, srcRect, destRect, angle);
-			}
+			TextureManager::Draw(texture, srcRect, destRect, angle);
+			
+			/*Uncomment this to see the destRect*/
+
+			//SDL_SetRenderDrawColor(Game::renderer, 0, 0, 255, 255);
+			//SDL_RenderFillRect(Game::renderer, &destRect);
 		}
 
-		void Play(const string& animName) {
+		void Play(const string& animName, int index) {
+			setTexture(textures.at(index));
+			map<string, Animation> animations = this->animations;
 			nFrames = animations[animName].frames;
 			animIndex = animations[animName].index;
 			oneThousandOverFPS = animations[animName].speed;
+		}
+
+		int getNFrames() {
+			return nFrames;
+		}
+
+		int getOneThousandOverFPS() {
+			return oneThousandOverFPS;
 		}
 };
 

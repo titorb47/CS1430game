@@ -261,7 +261,7 @@ class Manager {
 			groupedEntities[mGroup].emplace_back(mEntity);
 		}
 
-		vector<Entity*>& GetGroup(Group mGroup) {
+		vector<Entity*>& GetEntityInGroup(Group mGroup) {
 			return groupedEntities[mGroup];
 		}
 

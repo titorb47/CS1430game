@@ -48,8 +48,13 @@ public:
 		if (width == 0){width = transform->width;} 
 		if (height == 0){height = transform->height;}
 
+		width *= transform->scale * COLLIDER_SCALER;
+		height *= transform->scale * COLLIDER_SCALER;
+
 		collider.w = width;
 		collider.h = height;
+
+
 
 		//Add our collider to the array of colliders
 		Game::colliders.push_back(this);
@@ -66,7 +71,10 @@ public:
 	}
 
 	void draw() override {
+		/*Uncomment this to see hitbox*/
 
+		//SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 255);
+		//SDL_RenderFillRect(Game::renderer, &collider);
 	}
 
 private:
@@ -76,14 +84,14 @@ private:
 	int yOffset = 0;
 
 	int SetXPos() {
-		int x = (static_cast<int>(transform->position.x)
-		+ (transform->width / 2.0) - (width / 2.0)) + xOffset;
+		int x = static_cast<int>(transform->position.x)
+		+ (((transform->width * transform->scale) / 2.0) - (width / 2.0)) + xOffset;
 		return x;
 	}
 
 	int SetYPos() {
-		int y = (static_cast<int>(transform->position.y)
-		+ (transform->height / 2.0) - (height / 2.0)) + yOffset;
+		int y = static_cast<int>(transform->position.y)
+		+ (((transform->height * transform->scale) / 2.0) - (height / 2.0)) + yOffset;
 		return y;
 	}
 

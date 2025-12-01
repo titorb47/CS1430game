@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TransformComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\TransformComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\GameConstants.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\GameConstants.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\SpriteComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\SpriteComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TextureManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\TextureManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TextureManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\TextureManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\GameConstants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\GameConstants.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TransformComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\TransformComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\KeyboardController.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\KeyboardController.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\ColliderComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CE6E8556-1114-497D-9194-5B9F2E8916D8}|GroupProjectSDL\\GroupProjectSDL.vcxproj|solutionrelative:GroupProjectSDL\\ColliderComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,93 +38,99 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "KeyboardController.h",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\KeyboardController.h",
+              "RelativeDocumentMoniker": "GroupProjectSDL\\KeyboardController.h",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\KeyboardController.h",
+              "RelativeToolTip": "GroupProjectSDL\\KeyboardController.h",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADEAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-01T04:11:26.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GameConstants.h",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\GameConstants.h",
+              "RelativeDocumentMoniker": "GroupProjectSDL\\GameConstants.h",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\GameConstants.h",
+              "RelativeToolTip": "GroupProjectSDL\\GameConstants.h",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAEkAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-01T04:04:56.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameConstants.cpp",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\GameConstants.cpp",
+              "RelativeDocumentMoniker": "GroupProjectSDL\\GameConstants.cpp",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\GameConstants.cpp",
+              "RelativeToolTip": "GroupProjectSDL\\GameConstants.cpp",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAEIAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-01T04:04:18.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SpriteComponent.h",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\SpriteComponent.h",
+              "RelativeDocumentMoniker": "GroupProjectSDL\\SpriteComponent.h",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\SpriteComponent.h",
+              "RelativeToolTip": "GroupProjectSDL\\SpriteComponent.h",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAHAAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-01T04:03:24.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ColliderComponent.h",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\ColliderComponent.h",
+              "RelativeDocumentMoniker": "GroupProjectSDL\\ColliderComponent.h",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\ColliderComponent.h",
+              "RelativeToolTip": "GroupProjectSDL\\ColliderComponent.h",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-01T04:03:06.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TransformComponent.h",
+              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TransformComponent.h",
+              "RelativeDocumentMoniker": "GroupProjectSDL\\TransformComponent.h",
+              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TransformComponent.h",
+              "RelativeToolTip": "GroupProjectSDL\\TransformComponent.h",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-01T04:01:26.136Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TransformComponent.h",
-              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TransformComponent.h",
-              "RelativeDocumentMoniker": "GroupProjectSDL\\TransformComponent.h",
-              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TransformComponent.h",
-              "RelativeToolTip": "GroupProjectSDL\\TransformComponent.h",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-29T00:41:01.963Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Map.cpp",
-              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Map.cpp",
-              "RelativeDocumentMoniker": "GroupProjectSDL\\Map.cpp",
-              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Map.cpp",
-              "RelativeToolTip": "GroupProjectSDL\\Map.cpp",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-29T00:32:05.076Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TextureManager.cpp",
-              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TextureManager.cpp",
-              "RelativeDocumentMoniker": "GroupProjectSDL\\TextureManager.cpp",
-              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TextureManager.cpp",
-              "RelativeToolTip": "GroupProjectSDL\\TextureManager.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-29T00:12:51.169Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\main.cpp",
-              "RelativeDocumentMoniker": "GroupProjectSDL\\main.cpp",
-              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\main.cpp",
-              "RelativeToolTip": "GroupProjectSDL\\main.cpp",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-29T00:03:08.404Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TextureManager.h",
-              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TextureManager.h",
-              "RelativeDocumentMoniker": "GroupProjectSDL\\TextureManager.h",
-              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\TextureManager.h",
-              "RelativeToolTip": "GroupProjectSDL\\TextureManager.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-28T23:55:50.705Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SpriteComponent.h",
-              "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\SpriteComponent.h",
-              "RelativeDocumentMoniker": "GroupProjectSDL\\SpriteComponent.h",
-              "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\SpriteComponent.h",
-              "RelativeToolTip": "GroupProjectSDL\\SpriteComponent.h",
-              "ViewState": "AgIAADoAAAAAAAAAAAAcwEUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-22T18:15:45.507Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "Game.cpp",
               "DocumentMoniker": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Game.cpp",
               "RelativeDocumentMoniker": "GroupProjectSDL\\Game.cpp",
               "ToolTip": "C:\\Users\\Owner\\Documents\\GitHub\\CS1430game\\GroupProjectSDL\\GroupProjectSDL\\Game.cpp",
               "RelativeToolTip": "GroupProjectSDL\\Game.cpp",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAABgAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAALEAAAAAAAAAAAAAAJcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-19T17:12:04.292Z",
               "EditorCaption": ""

@@ -40,9 +40,8 @@ public:
 
 	bool running() { return isRunning; };
 
-	static void AddTile(int id, int x, int y);
 
-	static int tileCount;
+	static Uint32 currentTime;
 	static bool playerIsAlive;
 
 	static SDL_Renderer *renderer;

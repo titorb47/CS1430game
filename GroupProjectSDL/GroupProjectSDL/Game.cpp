@@ -1,72 +1,17 @@
 #include "Game.h"
 #include "TextureManager.h"
-#include "Map.h"
 #include "Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
 #include <cstdlib>
+#include "GameConstants.h"
 
 
-///How adding tiles works
-//1 Game.h declares addTile function
-//2 Game.cpp defines addTile function
-//3 addTile adds Tile component
-
-//4 LoadMap is called in Game.cpp
-//5 LoadMap calls addTile function
-//6 addTile function calls addComponent function for
-//	a tile component
-const char* MAP_PATH = "Assets/Ocean Map v1.png";
-
-SDL_Texture *mapTexture;
-const int MAP_DEST_RECT_X = 1024;
-const int MAP_DEST_RECT_Y = 1024;
-const int MAP_SIZE_Y = 512;
-const int MAP_SCROLL_SPEED = 10;
-
-SDL_Rect mapDestRect = {0, 0, MAP_DEST_RECT_X, MAP_DEST_RECT_Y};
-SDL_Rect mapSrcRect = {0, 492, 512, 20};
-
-//To change MAP_ROWS or MAP_COLS, the file itself needs to be changed
-//	to render any new tiles
-const int MAP_ROWS = 32;
-const int MAP_COLS = 32;
-const int TILE_HEIGHT = 32;
-const int TILE_WIDTH = 32;
-
-const char* PLAYER_PATH = "Assets/Fish Sheet with Dash.png";
-const char* ENEMY_PATH = "Assets/Shark.png";
-
-//DO NOT CHANGE HEIGHT AND WIDTH
-const int PLAYER_HEIGHT = 101;
-const int PLAYER_WIDTH = 100;
-
-//You can change scale and speed
-const int PLAYER_SCALE = 2;
-const int PLAYER_SPEED = 3;
-
-const int ENEMY_SCALE = 2;
-const int ENEMY_SPAWNRATE_MS = 2000;
-const int ENEMY_HEIGHT = 144;
-const int ENEMY_WIDTH = 144;
-const int ENEMY_SPEED = 15;
-const int ENEMY_SPAWNX_RANGE = 900;
-const int ENEMY_SPAWNY_RANGE = 1;
-
-Vector2D enemyVector(0, 1);
-
-const int PLAYER_COLLIDER_HEIGHT = 75;
-const int PLAYER_COLLIDER_WIDTH = 60;
-
-const string PLAYER_TAG = "player";
-const string ENEMY_TAG = "enemy";
-
-
-int Game::tileCount = 0;
 bool Game::playerIsAlive = true;
-
-Uint32 currentTime;
+bool dying = false;
+Uint32 Game::currentTime = 0;
 int lastSpawn = 0;
+
 
 //Each new game object must be intialized, updated, and rendered
 //Map* gameMap;
@@ -77,6 +22,7 @@ Manager manager;
 //so auto keyword is necessary to reference it again
 auto& player(manager.addEntity());
 
+
 //See ECS.cpp to understand how the group bitset works
 
 //The type of this enum is set to size_t
@@ -86,6 +32,7 @@ enum groupLabels : size_t {
 	ENEMIES_GROUP,
 	COLLIDERS_GROUP
 };
+
 
 /*
 * The renderer is set to a null pointer before
@@ -149,7 +96,7 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 		player.addComponent<TransformComponent>(500, 850, PLAYER_SPEED, PLAYER_HEIGHT, 
 		PLAYER_WIDTH, PLAYER_SCALE);
 		player.getComponent<TransformComponent>().setTag(PLAYER_TAG);
-		player.addComponent<SpriteComponent>(PLAYER_PATH, 0, true);
+		player.addComponent<SpriteComponent>(PLAYER_PATHS, -90, PLAYER_ANIMATIONS);
 		player.addComponent<ColliderComponent>(PLAYER_TAG, PLAYER_COLLIDER_HEIGHT, PLAYER_COLLIDER_WIDTH);
 		player.addComponent<KeyboardController>();
 
@@ -182,7 +129,13 @@ void Game::handleEvents() {
 	}
 }
 
+
 void Game::update() {
+
+	//This is the timer that spawns our enemies
+	// and carries out animations
+	currentTime = SDL_GetTicks();
+
 	//See ecs.h (manager and entity class)
 	manager.refresh();
 	manager.update();
@@ -216,7 +169,8 @@ void Game::update() {
 				int minOverlap = std::min({ overlapRight, overlapLeft, overlapTop, overlapBottom });
 
 				//This resolve vector determines how much the player should move
-				Vector2D resolve(0, 0);
+				Vector2D resolve;
+				resolve.Zero();
 
 				if (minOverlap == overlapRight)
 					resolve = Vector2D(-overlapRight, 0);
@@ -231,9 +185,12 @@ void Game::update() {
 				player.getComponent<TransformComponent>().velocity = Vector2D(0, 0);
 			}
 
-			//If the player hits an enemy, stop animations
+			//If the player hits an enemy, stop animations by setting 
+			//playerIsAlive to false
+
 			if (cc->tag == "enemy") {
 				playerIsAlive = false;
+				player.getComponent<SpriteComponent>().Play(PLAYER_DEATH, 2);
 			}
 		}
 	}
@@ -261,11 +218,6 @@ void Game::update() {
 	player.getComponent<TransformComponent>().position = currPosition;
 
 
-
-
-	//This is what spawns our enemies
-	currentTime = SDL_GetTicks();
-
 	if ( (currentTime - lastSpawn >= ENEMY_SPAWNRATE_MS) && 
 	playerIsAlive) {
 
@@ -273,13 +225,15 @@ void Game::update() {
 
 		//x, y, speed, height, width, scale
 		enemy.addComponent<TransformComponent>(rand() % ENEMY_SPAWNX_RANGE, 
-		rand() % ENEMY_SPAWNY_RANGE, ENEMY_SPEED, ENEMY_HEIGHT, 
+		-100, ENEMY_SPEED, ENEMY_HEIGHT, 
 		ENEMY_WIDTH, ENEMY_SCALE);
 
 		TransformComponent& transform = enemy.getComponent<TransformComponent>();
 
-		enemy.addComponent<SpriteComponent>(ENEMY_PATH, 180);
-		enemy.addComponent<ColliderComponent>(ENEMY_TAG, 100, 100, 80, 60);
+		enemy.addComponent<SpriteComponent>(ENEMY_PATHS, 180, ENEMY_ANIMATIONS);
+		enemy.addComponent<ColliderComponent>(ENEMY_TAG, 100, 100);
+
+		enemy.getComponent<SpriteComponent>().Play(ENEMY_SWIM, 0);
 
 		//Add enemy to ENEMY_GROUP
 		enemy.addGroup(ENEMIES_GROUP);
@@ -290,17 +244,25 @@ void Game::update() {
 	}
 
 	if (playerIsAlive) {
+		//Scroll the Map
 		mapSrcRect.y = MAP_SIZE_Y - 20 - 
 		( (currentTime / MAP_SCROLL_SPEED) % (MAP_SIZE_Y));
+
+		//Play swimming animation
+		if (!player.getComponent<KeyboardController>().dashing) {
+			player.getComponent<SpriteComponent>().Play(PLAYER_SWIM, 0);
+		}
 	}
+
+
 }
 
 //Here we add our groups
 
 /* players and enemies are references
    to the vector of entity pointers */
-auto& players(manager.GetGroup(PLAYERS_GROUP));
-auto& enemies(manager.GetGroup(ENEMIES_GROUP));
+auto& players(manager.GetEntityInGroup(PLAYERS_GROUP));
+auto& enemies(manager.GetEntityInGroup(ENEMIES_GROUP));
 
 void Game::render() {
 
@@ -309,12 +271,6 @@ void Game::render() {
 	SDL_RenderClear(renderer);
 
 	SDL_RenderCopy(renderer, mapTexture, &mapSrcRect, &mapDestRect);
-
-	/*
-	for (auto& t : tiles) {
-		t->draw();
-	}
-	*/
 
 	for (auto& p : players) {
 		p->draw();
@@ -341,16 +297,3 @@ void Game::clean() {
 	SDL_Quit();
 	cout << "Game was cleaned!" << endl;
 }
-
-
-void Game::AddTile(int id, int x, int y) {
-	//Adds the tile entity
-	auto& tile(manager.addEntity());
-
-	
-	//Adds the tile component to the tile entity
-	tile.addComponent<TileComponent>(x, y, TILE_WIDTH, TILE_HEIGHT, id);
-	tile.addGroup(MAP_GROUP);
-}
-
-

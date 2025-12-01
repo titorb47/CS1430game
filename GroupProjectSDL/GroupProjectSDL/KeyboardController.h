@@ -2,6 +2,7 @@
 #define keyboardcontroller_h
 
 #include "Game.h"
+#include "GameConstants.h"
 #include "Components.h"
 #include <cmath>
 
@@ -11,9 +12,10 @@ struct KeyboardController : public Component {
 	SpriteComponent *sprite;
 	bool dashing = false;
 	bool canDash = true;
+	double originalSpeed;
 	double x;
 	double y;
-	Uint32 timer = SDL_GetTicks();
+	Uint32 timer;
 	Uint32 dashMark;
 	Uint32 delayMark;
 
@@ -23,7 +25,7 @@ struct KeyboardController : public Component {
 	}
 
 	void update() override {
-		timer = SDL_GetTicks();
+		timer = Game::currentTime;
 		
 		if (Game::playerIsAlive) {
 			//When a key is pressed down
@@ -40,20 +42,25 @@ struct KeyboardController : public Component {
 			
 			if (state[SDL_SCANCODE_SPACE] && !dashing) {
 				if (canDash) {
-					sprite->Play(sprite->DASH_ANIMATION_NAME);
-					transform->velocity.y = -2.5 * transform->speed;
+					originalSpeed = transform->speed;
+					transform->speed *= 2;
+					
 					dashing = true;
+					dashMark = timer;
+					cout << dashMark << endl;
+
+					sprite->Play(PLAYER_DASH, 1);
 					canDash = false;
 				}
 			}
 
 			if ((timer - dashMark > Game::DASH_DURATION) && dashing) {
 				delayMark = timer;
+				transform->speed = originalSpeed;
 				dashing = false;
 			}
 
 			if (timer - delayMark > Game::DASH_DELAY) {
-				sprite->Play("Swim");
 				canDash = true;
 			}
 	
