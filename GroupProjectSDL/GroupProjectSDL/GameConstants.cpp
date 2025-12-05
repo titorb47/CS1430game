@@ -11,6 +11,17 @@
 //	a tile component
 const char* MAP_PATH = "Assets/Ocean Map v1.png";
 
+const char* FONT_PATH = "Assets/font.ttf";
+const int FONT_SIZE = 96;
+const int FONT_R = 255;
+const int FONT_G = 255;
+const int FONT_B = 255;
+const int FONT_A = 255;
+
+const char* FONT_BACKGROUND_PATH = "Assets/FontBackground.png";
+const double FONT_BACKGROUND_SCALE = 2;
+const int SCORE_UPDATE_SLOWNESS = 100;
+
 SDL_Texture* mapTexture;
 const int MAP_DEST_RECT_X = 1024;
 const int MAP_DEST_RECT_Y = 1024;
@@ -21,9 +32,17 @@ const int MAP_SRC_RECT_H = 20;
 const int MAP_SIZE_Y = 512;
 const int MAP_SCROLL_SPEED = 10;
 
+const int TEXT_H = 150;
+const int TEXT_W = 150;
+const int TEXT_START_X = 100;
+const int TEXT_START_Y = 60;
 
-SDL_Rect mapDestRect = { 0, 0, MAP_DEST_RECT_X, MAP_DEST_RECT_Y };
-SDL_Rect mapSrcRect = { 0, MAP_SRC_RECT_Y, MAP_SRC_RECT_W, MAP_SRC_RECT_H };
+SDL_Rect MAP_DEST_RECT = { 0, 0, MAP_DEST_RECT_X, MAP_DEST_RECT_Y };
+SDL_Rect MAP_SRC_RECT = { 0, MAP_SRC_RECT_Y, MAP_SRC_RECT_W, MAP_SRC_RECT_H };
+const SDL_Rect TEXT_DEST_RECT = {TEXT_START_X, TEXT_START_Y, TEXT_W, TEXT_H};
+
+
+const int TOP = 730;
 
 //To change MAP_ROWS or MAP_COLS, the file itself needs to be changed
 //	to render any new tiles
@@ -46,12 +65,12 @@ const int PLAYER_SCALE = 4;
 const double PLAYER_SPEED = 2.6;
 const double PLAYER_DASH_MULTIPLIER = 1.5;
 
-const int ENEMY_SCALE = 10;
-const int ENEMY_SPAWNRATE_MS = 2000;
+const int ENEMY_SCALE = 7;
+int ENEMY_SPAWNRATE_MS = 2000;
 const int ENEMY_HEIGHT = 48;
 const int ENEMY_WIDTH = 48;
 const int ENEMY_SPEED = 15;
-const int ENEMY_SPAWNX_RANGE = 900;
+const int ENEMY_SPAWNX_RANGE = 850;
 
 Vector2D enemyVector(0, 1);
 

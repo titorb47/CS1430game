@@ -16,6 +16,15 @@ SDL_Texture* TextureManager::LoadTexture(const char* filename) {
 
 }
 
+SDL_Texture* TextureManager::LoadFont(TTF_Font& font, const char* text, int r, 
+int g, int b, int a) {
+	SDL_Color textColor = { r, g, b, a }; // White color (RGBA)
+	SDL_Surface* textSurface = TTF_RenderText_Blended(&font, text, textColor);
+	SDL_Texture* texture  = SDL_CreateTextureFromSurface(Game::renderer, textSurface);
+	SDL_FreeSurface(textSurface);
+
+	return texture;
+}
 
 void TextureManager::Draw(SDL_Texture* texture, const SDL_Rect src, const SDL_Rect dest,
 	double angle) {

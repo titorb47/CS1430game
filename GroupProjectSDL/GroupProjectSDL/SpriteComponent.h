@@ -16,10 +16,10 @@ class SpriteComponent : public Component {
 	private:
 		
 		//These are the components that sprites need
-		TransformComponent *transform;
-		SDL_Texture *texture;
-		SDL_Rect srcRect;
-		SDL_Rect destRect;
+		TransformComponent *transform = NULL;
+		SDL_Texture *texture = NULL;
+		SDL_Rect srcRect = {0,0,0,0};
+		SDL_Rect destRect = {0,0,0,0};
 
 		bool animated = false;
 		bool dying = false;
@@ -111,7 +111,6 @@ class SpriteComponent : public Component {
 				if (timer - deathStart < PLAYER_DEATH_ANIM_DURATION) {
 					srcRect.x = srcRect.w *
 						static_cast<int>(((timer - deathStart) / oneThousandOverFPS) % nFrames);
-					cout << oneThousandOverFPS << endl;
 				}
 				
 				

@@ -18,6 +18,19 @@
 //	a tile component
 extern const char* MAP_PATH;
 
+extern const char* FONT_PATH;
+extern const int FONT_SIZE;
+extern const int FONT_R;
+extern const int FONT_G;
+extern const int FONT_B;
+extern const int FONT_A;
+
+extern const char* FONT_BACKGROUND_PATH;
+extern const double FONT_BACKGROUND_SCALE;
+
+//This must be an int to prevent lag
+extern const int SCORE_UPDATE_SLOWNESS;
+
 extern SDL_Texture* mapTexture;
 extern const int MAP_DEST_RECT_X;
 extern const int MAP_DEST_RECT_Y;
@@ -28,12 +41,21 @@ extern const int MAP_SRC_RECT_H;
 extern const int MAP_SIZE_Y;
 extern const int MAP_SCROLL_SPEED;
 
+extern const int TEXT_H;
+extern const int TEXT_W;
+extern const int TEXT_START_X;
+extern const int TEXT_START_Y;
 
-extern SDL_Rect mapDestRect;
-extern SDL_Rect mapSrcRect;
+
+extern SDL_Rect MAP_DEST_RECT;
+extern SDL_Rect MAP_SRC_RECT;
+extern const SDL_Rect TEXT_DEST_RECT;
 
 //To change MAP_ROWS or MAP_COLS, the file itself needs to be changed
 //	to render any new tiles
+
+extern const int TOP;
+
 extern const int MAP_ROWS;
 extern const int MAP_COLS;
 extern const int TILE_HEIGHT;
@@ -52,7 +74,7 @@ extern const double PLAYER_SPEED;
 extern const double PLAYER_DASH_MULTIPLIER;
 
 extern const int ENEMY_SCALE;
-extern const int ENEMY_SPAWNRATE_MS;
+extern int ENEMY_SPAWNRATE_MS;
 extern const int ENEMY_HEIGHT;
 extern const int ENEMY_WIDTH;
 extern const int ENEMY_SPEED;

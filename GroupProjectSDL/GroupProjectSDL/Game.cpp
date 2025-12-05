@@ -4,6 +4,7 @@
 #include "Vector2D.h"
 #include "Collision.h"
 #include <cstdlib>
+#include <string>
 #include "GameConstants.h"
 
 
@@ -11,7 +12,7 @@ bool Game::playerIsAlive = true;
 bool dying = false;
 Uint32 Game::currentTime = 0;
 int lastSpawn = 0;
-
+int Game::score = 0;
 
 //Each new game object must be intialized, updated, and rendered
 //Map* gameMap;
@@ -21,18 +22,16 @@ Manager manager;
 //addEntity() also puts this entity in unique_ptr<Entity>
 //so auto keyword is necessary to reference it again
 auto& player(manager.addEntity());
+auto& scoreBackground(manager.addEntity());
 
 
 //See ECS.cpp to understand how the group bitset works
-
 //The type of this enum is set to size_t
 enum groupLabels : size_t {
-	MAP_GROUP,
 	PLAYERS_GROUP,
 	ENEMIES_GROUP,
-	COLLIDERS_GROUP
+	MAP_GROUP
 };
-
 
 /*
 * The renderer is set to a null pointer before
@@ -42,6 +41,9 @@ enum groupLabels : size_t {
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 vector<ColliderComponent*> Game::colliders;
+
+TTF_Font* font;
+SDL_Texture* fontTexture;
 
 //Constructor
 Game::Game(){
@@ -64,6 +66,18 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		cout << "ALL SYSTEMS GO!" << endl;
 
+		TTF_Init();
+		font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
+		if (font == nullptr) {
+			cout << "Error: Font could not load!" << endl;
+		}
+		else {
+			fontTexture = TextureManager::LoadFont(*font, "0",
+				FONT_R, FONT_G, FONT_B, FONT_A);
+		}
+			
+
+
 		//See game.h
 		window = SDL_CreateWindow(title, xpos, ypos, WINDOW_WIDTH, WINDOW_HEIGHT, flags);
 
@@ -81,14 +95,6 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 
 		isRunning = true;
 
-
-		//map.h and map.cpp
-		//gameMap = new Map();
-
-		//See Map.cpp
-		//Last two numbers are sizes for array
-		//Map::LoadMap(MAP_PATH, MAP_ROWS, MAP_COLS);
-
 		mapTexture = TextureManager::LoadTexture(MAP_PATH);
 
 		//See ecs.h and the header files for each component
@@ -104,6 +110,9 @@ void Game::init(const char* title, int xpos, int ypos, bool fullscreen) {
 		//Add player to PLAYER_GROUP
 		player.addGroup(PLAYERS_GROUP);
 
+		scoreBackground.addComponent<TransformComponent>(-50, -120, 0, 300, 250, FONT_BACKGROUND_SCALE);
+		scoreBackground.addComponent<SpriteComponent>(FONT_BACKGROUND_PATH);
+		scoreBackground.addGroup(MAP_GROUP);
 
 
 	}
@@ -136,6 +145,8 @@ void Game::update() {
 	// and carries out animations
 	currentTime = SDL_GetTicks();
 
+	score = currentTime;
+
 	//See ecs.h (manager and entity class)
 	manager.refresh();
 	manager.update();
@@ -149,7 +160,8 @@ void Game::update() {
 
 	for (auto cc : colliders) {
 		if (Collision::AABB(player.getComponent<ColliderComponent>(), *cc)
-		&& cc->tag != PLAYER_TAG)
+		&& cc->tag != PLAYER_TAG && 
+		!player.getComponent<KeyboardController>().dashing)
 		{
 			int ccLeft = cc->leftEdge;
 			int ccRight = cc->rightEdge;
@@ -205,8 +217,8 @@ void Game::update() {
 		currPosition -= newVec;
 	}
 
-	if (playerTop < 0) {
-		Vector2D newVec(0, 0 - playerTop);
+	if (playerTop < TOP) {
+		Vector2D newVec(0, TOP - playerTop);
 		currPosition += newVec;
 	}
 
@@ -222,6 +234,11 @@ void Game::update() {
 	playerIsAlive) {
 
 		auto& enemy(manager.addEntity());
+
+		if (ENEMY_SPAWNRATE_MS > 700) {
+			ENEMY_SPAWNRATE_MS -= 20;
+		}
+
 
 		//x, y, speed, height, width, scale
 		enemy.addComponent<TransformComponent>(rand() % ENEMY_SPAWNX_RANGE, 
@@ -245,13 +262,19 @@ void Game::update() {
 
 	if (playerIsAlive) {
 		//Scroll the Map
-		mapSrcRect.y = MAP_SIZE_Y - 20 - 
+		MAP_SRC_RECT.y = MAP_SIZE_Y - 20 - 
 		( (currentTime / MAP_SCROLL_SPEED) % (MAP_SIZE_Y));
 
 		//Play swimming animation
 		if (!player.getComponent<KeyboardController>().dashing) {
 			player.getComponent<SpriteComponent>().Play(PLAYER_SWIM, 0);
 		}
+
+		//Update Score
+		string stringScore = to_string(score);
+		const char* score = stringScore.c_str();
+		fontTexture = TextureManager::LoadFont(*font,
+			score, FONT_R, FONT_G, FONT_B, FONT_A);
 	}
 
 
@@ -270,7 +293,7 @@ void Game::render() {
 	//Clear our game's renderer data member
 	SDL_RenderClear(renderer);
 
-	SDL_RenderCopy(renderer, mapTexture, &mapSrcRect, &mapDestRect);
+	SDL_RenderCopy(renderer, mapTexture, &MAP_SRC_RECT, &MAP_DEST_RECT);
 
 	for (auto& p : players) {
 		p->draw();
@@ -287,11 +310,17 @@ void Game::render() {
 		
 	}
 
+	scoreBackground.draw();
+	
+	SDL_RenderCopy(renderer, fontTexture, NULL, &TEXT_DEST_RECT);
+
 	SDL_RenderPresent(renderer);
 }
 
 void Game::clean() {
 	//This is how we clean up our game!
+	TTF_CloseFont(font);
+	TTF_Quit();
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

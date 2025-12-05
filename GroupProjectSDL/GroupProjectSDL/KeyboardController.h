@@ -47,7 +47,6 @@ struct KeyboardController : public Component {
 					
 					dashing = true;
 					dashMark = timer;
-					cout << dashMark << endl;
 
 					sprite->Play(PLAYER_DASH, 1);
 					canDash = false;

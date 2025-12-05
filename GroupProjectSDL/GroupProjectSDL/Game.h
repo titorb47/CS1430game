@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_main.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -50,6 +51,8 @@ public:
 	static const int WINDOW_HEIGHT = 1024;
 	static const int DASH_DELAY = 3000;
 	static const int DASH_DURATION = 1000;
+
+	static int score;
 
 
 	//Only one event is necessary

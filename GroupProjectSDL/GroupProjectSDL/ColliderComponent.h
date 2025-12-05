@@ -73,7 +73,7 @@ public:
 	void draw() override {
 		/*Uncomment this to see hitbox*/
 
-		//SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 255);
+		//SDL_SetRenderDrawColor(Game::renderer, 255, 0, 0, 100);
 		//SDL_RenderFillRect(Game::renderer, &collider);
 	}
 

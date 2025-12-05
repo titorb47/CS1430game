@@ -232,7 +232,7 @@ class Manager {
 			/*The elements that meet the condition are moved to the end of the vector
 			* therefore (range start) is defined */
 
-			//The range is therefore from the first element to be remove to 
+			//The range is therefore from the first element to be removed to 
 			// the end of the vector (range start, range end)
 				
 
@@ -249,6 +249,7 @@ class Manager {
 				), end(v));
 			}
 
+			//Erase all entities that are not in groups
 			entities.erase(remove_if (begin(entities), end(entities),
 				[](const unique_ptr<Entity>& mEntity) {
 					return !mEntity->isActive();
