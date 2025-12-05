@@ -2,7 +2,7 @@
 #define keyboardcontroller_h
 
 #include "Game.h"
-#include "GameConstants.h"
+#include "GameVariables.h"
 #include "Components.h"
 #include <cmath>
 
@@ -53,13 +53,13 @@ struct KeyboardController : public Component {
 				}
 			}
 
-			if ((timer - dashMark > Game::DASH_DURATION) && dashing) {
+			if ((timer - dashMark > DASH_DURATION) && dashing) {
 				delayMark = timer;
 				transform->speed = originalSpeed;
 				dashing = false;
 			}
 
-			if (timer - delayMark > Game::DASH_DELAY) {
+			if (timer - delayMark > DASH_DELAY) {
 				canDash = true;
 			}
 	

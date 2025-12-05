@@ -32,14 +32,18 @@ public:
 
 	~Game();
 
-	void init(const char* title, int xpos, int ypos, bool fullscreen);
+	void init();
 	
+	void runGame();
+
 	void handleEvents();
 	void update();
 	void render();
 	void clean();
 
-	bool running() { return isRunning; };
+
+	static bool running() { return isRunning; };
+	static void setRunning(bool set){ isRunning = set; }
 
 
 	static Uint32 currentTime;
@@ -47,22 +51,20 @@ public:
 
 	static SDL_Renderer *renderer;
 
-	static const int WINDOW_WIDTH = 1024;
-	static const int WINDOW_HEIGHT = 1024;
-	static const int DASH_DELAY = 3000;
-	static const int DASH_DURATION = 1000;
-
 	static int score;
 
 
-	//Only one event is necessary
+	/* Only one event is necessary, which we will keep checking
+	   while the game is running */
 	static SDL_Event event;
 
 	static vector<ColliderComponent*> colliders;
 
 private:
-	bool isRunning;
-	SDL_Window* window;
+	static bool isRunning;
+	SDL_Window* window = NULL;
+	Uint32 frameStart = 0;
+	int frameTime = 0;
 };
 
 #endif

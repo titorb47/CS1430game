@@ -2,6 +2,7 @@
 #define TEXTURE_MANAGER_H
 
 #include "Game.h"
+#include "GameVariables.h"
 
 //This class manages textures of game objects
 

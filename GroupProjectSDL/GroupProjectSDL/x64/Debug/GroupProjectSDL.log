@@ -1,26 +1,8 @@
-﻿  Game.cpp
-C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(51,29): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(52,30): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(87,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\ColliderComponent.h(93,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-  
-C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\Game.cpp(233,32): warning C4018: '>=': signed/unsigned mismatch
-C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\ECS.h(166,29): warning C4244: 'argument': conversion from 'const double' to 'int', possible loss of data
-  (compiling source file 'Game.cpp')
-      C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\ECS.h(166,29):
-      the template instantiation context (the oldest one first) is
-          C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\Game.cpp(113,19):
-          see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int,const double&>(int &&,int &&,int &&,int &&,int &&,const double &)' being compiled
-          with
-          [
-              T=TransformComponent
-          ]
-  
+﻿  GameVariables.cpp
+  main.cpp
+C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\main.cpp(105,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\main.cpp(113,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\main.cpp(121,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\GroupProjectSDL\main.cpp(129,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
   GroupProjectSDL.vcxproj -> C:\Users\Owner\Documents\GitHub\CS1430game\GroupProjectSDL\x64\Debug\GroupProjectSDL.exe

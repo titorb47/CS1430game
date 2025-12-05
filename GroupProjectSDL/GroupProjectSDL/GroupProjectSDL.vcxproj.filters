@@ -36,7 +36,10 @@
     <ClCompile Include="ECS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameConstants.cpp">
+    <ClCompile Include="GameVariables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +77,7 @@
     <ClInclude Include="Animation.h">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="GameConstants.h">
+    <ClInclude Include="GameVariables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,7 @@
 
 #include "Components.h"
 #include "Game.h"
-#include "GameConstants.h"
+#include "GameVariables.h"
 #include "SDL.h"
 #include "TextureManager.h"
 #include "Animation.h"
