@@ -378,6 +378,7 @@ int main(int argc, char * args[]) {
                         Game::setRunning(true);
                         quit = true;
                         ENEMY_SPAWNRATE_MS -= ENEMY_SPAWNRATE_MODIFIER;
+						TIME_STARTED = SDL_GetTicks();
                     }
                     if (btn.label == "Easy") {
                         ENEMY_SPAWNRATE_MODIFIER = 0;
