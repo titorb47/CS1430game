@@ -1,0 +1,8 @@
+build/
+bin/
+.idea/
+.vscode/
+*.sln
+*.vcxproj
+*.o
+*.exe
