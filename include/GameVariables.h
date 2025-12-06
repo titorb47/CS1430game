@@ -19,6 +19,7 @@ extern SDL_Renderer* RENDERER;
 
 extern double GAME_START_DELAY;
 extern bool GAME_STARTED;
+extern int TIME_STARTED;
 
 extern const char* MAP_PATH;
 

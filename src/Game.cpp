@@ -129,7 +129,13 @@ void Game::update() {
 
 	//This is the timer that spawns our enemies
 	// and carries out animations
-	currentTime = SDL_GetTicks();
+	if (!GAME_STARTED) {
+	currentTime = SDL_GetTicks() - TIME_STARTED;
+	}
+	else {
+		currentTime = SDL_GetTicks() - TIME_STARTED - GAME_START_DELAY;
+	}
+	
 
 	if (currentTime > GAME_START_DELAY) {
 		GAME_STARTED = true;
