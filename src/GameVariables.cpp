@@ -7,6 +7,7 @@ SDL_Renderer* RENDERER = nullptr;
 
 double GAME_START_DELAY = 3000;
 bool GAME_STARTED = false;
+int TIME_STARTED = 0;
 
 const char* MAP_PATH = "Assets/Ocean Map v1.png";
 
