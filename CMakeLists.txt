@@ -24,3 +24,11 @@ target_link_libraries(GameExecutable
     ${SDL2_MIXER_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
 )
+# --- Auto-Copy Assets ---
+# This tells CMake to copy the "Assets" folder to the build folder 
+# every time the game finishes compiling.
+add_custom_command(TARGET GameExecutable POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/Assets
+    ${CMAKE_BINARY_DIR}/Assets
+)
